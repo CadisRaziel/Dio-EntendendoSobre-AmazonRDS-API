@@ -1,7 +1,6 @@
 package com.example.dioclass.apirest.ApiRest;
 
 
-import com.example.dioclass.apirest.Person;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

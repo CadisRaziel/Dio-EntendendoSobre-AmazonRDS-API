@@ -1,4 +1,4 @@
-package com.example.dioclass.apirest;
+package com.example.dioclass.apirest.MyFirstApi;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

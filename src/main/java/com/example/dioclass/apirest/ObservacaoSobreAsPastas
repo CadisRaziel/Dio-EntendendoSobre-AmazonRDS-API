@@ -1,0 +1,5 @@
+Cada pasta é uma API
+porém com diferentes conteudos
+Para inicializar ela basta ir na classe main de respectiva pasta e iniciarlizar
+o db ja esta na amazon rds
+ele é gratuito

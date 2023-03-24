@@ -1,4 +1,4 @@
-package com.example.dioclass.apirest;
+package com.example.dioclass.apirest.MyFirstApi;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
