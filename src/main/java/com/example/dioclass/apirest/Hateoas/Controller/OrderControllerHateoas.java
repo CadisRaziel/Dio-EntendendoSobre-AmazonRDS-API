@@ -109,11 +109,18 @@ public class OrderControllerHateoas {
     }
 
     @PutMapping("/orders/{id}/cancel")
+    //cancelando uma ordem
+    //<?> -> generic (nao sabe o tipo)
     public ResponseEntity<?> cancelOrderById(@PathVariable long id){
         OrderHateoas cancelledOrder = repositoryOrder.findById(id).orElseThrow(
                 () -> new OrderNotFoundExceptionHateoas(id));
+        //se existir vamos verificar se o status do atual esta como 'em progresso'
         if (cancelledOrder.getStatus() == Status.IN_PROGRESS){
+
+            //se tive em progresso vamos cancelar
             cancelledOrder.setStatus(Status.CANCELLED);
+
+            //aqui vamos adicionar os nossos links
             cancelledOrder.add(linkTo(methodOn(OrderControllerHateoas.class).consultOneOrder(id)).withSelfRel());
             cancelledOrder.add(linkTo(methodOn(OrderControllerHateoas.class).consultOrderAll())
                     .withRel("Complete order list"));
@@ -121,19 +128,24 @@ public class OrderControllerHateoas {
             return new ResponseEntity<>(cancelledOrder,HttpStatus.OK);
         }
 
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED) //
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED) // metodo nao permitido
                 .header(HttpHeaders.CONTENT_TYPE,
-                        MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //
+                        MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //setando o que aconteceu
                 .body("You can't complete the task, the order has a " +
-                        cancelledOrder.getStatus() + " status");
+                        cancelledOrder.getStatus() + " status"); //porque que eu erro ao cancelar o status
     }
 
     @PutMapping("/orders/{id}/complete")
     public ResponseEntity<?> completeOrderById(@PathVariable long id){
         OrderHateoas cancelledOrder = repositoryOrder.findById(id).orElseThrow(
                 () -> new OrderNotFoundExceptionHateoas(id));
+        //se existir vamos verificar se o status do atual esta como 'em progresso'
         if (cancelledOrder.getStatus() == Status.IN_PROGRESS){
+
+            //se tive em progresso vamos completar
             cancelledOrder.setStatus(Status.COMPLETED);
+
+            //aqui vamos adicionar os nossos links
             cancelledOrder.add(linkTo(methodOn(OrderControllerHateoas.class).consultOneOrder(id)).withSelfRel());
             cancelledOrder.add(linkTo(methodOn(OrderControllerHateoas.class).consultOrderAll())
                     .withRel("Complete order list"));
@@ -141,11 +153,11 @@ public class OrderControllerHateoas {
             return new ResponseEntity<>(cancelledOrder,HttpStatus.OK);
         }
 
-        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED) //
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED) // metodo nao permitido
                 .header(HttpHeaders.CONTENT_TYPE,
-                        MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //
+                        MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //setando o que aconteceu
                 .body("You can't complete the task, the order has a " +
-                        cancelledOrder.getStatus() + " status");
+                        cancelledOrder.getStatus() + " status"); //porque que eu erro ao cancelar o status
     }
 
 }
